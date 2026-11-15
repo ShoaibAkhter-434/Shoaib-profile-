@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body {
+      background: #282A36;
+      color: #F8F8F2;
+      font-family: Poppins, Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 { font-size: 40px; margin: 0; color: #F1FA8C; }
+    #temp { font-size: 120px; color: #50FA7B; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>New York 🌦️</h1>
+    <div id="temp">...</div>
+  </div>
+
+  <script>
+    const lat = 40.71;
+    const lon = -74.01;
+    const url =
+      "https://api.open-meteo.com/v1/forecast" +
+      `?latitude=${lat}&longitude=${lon}&current_weather=true`;
+
+    async function getWeather() {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.current_weather.temperature;
+    }
+
+    getWeather().then(t => {
+      document.getElementById("temp").textContent = t + "°C";
+    });
+  </script>
+</body>
+</html>
